@@ -24,7 +24,7 @@ import java.util.ArrayList;
 /**
  * Created by bkmsx on 08/11/2016.
  */
-public class FragmentVideosGallery extends Fragment{
+public class FragmentImagesGallery extends Fragment{
     ArrayList<String> mListFolder;
     ArrayList<String> mListFirstVideo, mListVideo;
     GridView mGridView;
@@ -33,7 +33,7 @@ public class FragmentVideosGallery extends Fragment{
     VideoGalleryAdapter mFolderAdapter, mVideoAdapter;
 
     boolean mIsSubFolder;
-    String[] pattern = {".mp4"};
+    String[] pattern = {".png", "jpg"};
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class FragmentVideosGallery extends Fragment{
     AdapterView.OnItemClickListener onVideoClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            log("this video path: "+mListVideo.get(i));
+            log("this image path: "+mListVideo.get(i));
         }
     };
 
@@ -204,10 +204,10 @@ public class FragmentVideosGallery extends Fragment{
             TextView textView = (TextView) convertView.findViewById(R.id.text_view);
             ImageView iconFolder = (ImageView) convertView.findViewById(R.id.icon_folder);
             String name;
-            int iconId ;
+            int iconId;
             if (mIsSubFolder) {
                 name = new File(mListVideo.get(position)).getName();
-                iconId = R.drawable.ic_video;
+                iconId = R.drawable.ic_picture;
             } else {
                 name = new File(mListFolder.get(position)).getName();
                 iconId = R.drawable.ic_folder;

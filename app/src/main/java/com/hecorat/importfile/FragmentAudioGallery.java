@@ -16,15 +16,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import java.io.File;
 import java.util.ArrayList;
 
 /**
  * Created by bkmsx on 08/11/2016.
  */
-public class FragmentVideosGallery extends Fragment{
+public class FragmentAudioGallery extends Fragment{
     ArrayList<String> mListFolder;
     ArrayList<String> mListFirstVideo, mListVideo;
     GridView mGridView;
@@ -33,7 +31,7 @@ public class FragmentVideosGallery extends Fragment{
     VideoGalleryAdapter mFolderAdapter, mVideoAdapter;
 
     boolean mIsSubFolder;
-    String[] pattern = {".mp4"};
+    String[] pattern = {".mp3",".aac"};
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -86,7 +84,7 @@ public class FragmentVideosGallery extends Fragment{
     AdapterView.OnItemClickListener onVideoClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            log("this video path: "+mListVideo.get(i));
+            log("this audio path: "+mListVideo.get(i));
         }
     };
 
@@ -203,18 +201,23 @@ public class FragmentVideosGallery extends Fragment{
             ImageView imageView = (ImageView) convertView.findViewById(R.id.image_view);
             TextView textView = (TextView) convertView.findViewById(R.id.text_view);
             ImageView iconFolder = (ImageView) convertView.findViewById(R.id.icon_folder);
+            iconFolder.setVisibility(View.GONE);
             String name;
-            int iconId ;
             if (mIsSubFolder) {
                 name = new File(mListVideo.get(position)).getName();
-                iconId = R.drawable.ic_video;
             } else {
                 name = new File(mListFolder.get(position)).getName();
-                iconId = R.drawable.ic_folder;
             }
-            iconFolder.setImageResource(iconId);
             textView.setText(name);
-            Glide.with(getContext()).load(videoPath).centerCrop().into(imageView);
+            int iconId;
+            if (name.endsWith(".mp3")) {
+                iconId = R.drawable.ic_mp3;
+            } else if (name.endsWith(".aac")) {
+                iconId = R.drawable.ic_aac;
+            } else {
+                iconId = R.drawable.ic_audio_folder;
+            }
+            imageView.setImageResource(iconId);
             return convertView;
         }
 
